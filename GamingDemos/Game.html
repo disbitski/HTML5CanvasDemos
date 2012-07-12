@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Easel simple game</title>
+<script src="lib/easel.js"></script>
+<script>
+var canvas;
+var stage;
+var bg;
+var score;
+var bmpList;
+var bitmap;
+
+function init() {
+	canvas = document.getElementById("canvas");
+	stage = new Stage(canvas);
+	score = 0;
+	
+	bg = new Image();
+	bg.src = "img/planet.jpg";
+	bg.onload = setBG;
+
+    //Dave - Add Images
+	var image = new Image();
+	image.src = "img/ship.png";
+	image.onload = createShips;
+
+
+}
+
+function setBG(event){
+	var bgrnd = new Bitmap(bg);
+	stage.addChild(bgrnd);
+	stage.update();
+}
+
+//Dave - create lots of ships. store in container.
+function createShips(event) {
+    var image = event.target;
+    var container = new Container();
+    stage.addChild(container);
+    var l = 5;
+    bmpList = [];
+    for (var i = 0; i < l; i++) {
+        bitmap = new Bitmap(image);
+        container.addChild(bitmap);
+        bitmap.name = 'ship' + i;
+        resetEnemy(bitmap);
+        bitmap.regX = bitmap.image.width / 2 | 0;
+        bitmap.regY = bitmap.image.height / 2 | 0;
+        bitmap.mouseEnabled = true;
+        bmpList.push(bitmap);
+    }
+    stage.update();
+}
+
+function resetEnemy(ship) {
+    ship.x = canvas.width - Math.random() * 500; //starts off stage and random speed/flight
+    ship.y = canvas.height * Math.random() | 0;
+    ship.speed = (Math.random() * 5) + 2;
+
+}
+
+</script>
+</head>
+
+<body onload="init();">
+
+	<canvas id="canvas" width="960" height="580"></canvas>
+ 
+ </body>
+</html>

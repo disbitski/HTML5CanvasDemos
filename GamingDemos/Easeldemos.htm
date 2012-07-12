@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script src="lib/easel.js" type="text/javascript"></script>
+    <script>
+
+        var canvas;
+        var stage;
+        var text;
+        var img;
+        var logo;
+
+        function init() {
+            canvas = document.getElementById('canvas');
+            stage = new Stage(canvas);
+
+            text = new Text('Hello World!', '36px Arial', '#777');
+            text.x = 100;
+            text.y = 100;
+
+            img = new Image();
+            img.src = 'img/Awesome.png';
+            img.onload = setImg;
+
+        }
+
+        function setImg(event) {
+            logo = new Bitmap(img);
+            stage.addChild(logo);
+            logo.x = canvas.width - 400;
+            logo.y = canvas.height/2 - 100;
+            stage.addChild(text);
+
+            Ticker.addListener(window);
+
+        }
+
+        function tick() {
+            logo.x -= 2;
+            stage.update();
+        }
+    
+    </script>
+</head>
+<body onload="init();">
+
+<canvas id="canvas" width="960" height="580"></canvas>
+
+</body>
+</html>
